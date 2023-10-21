@@ -7,7 +7,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-core-backend-deployment
+  name: app-saas-comercecloud-core-backend-deployment
   namespace: ns-app-prj-saas-comercecloud-core-backend
 spec:
   replicas: 2
@@ -20,7 +20,7 @@ spec:
         app: app-prj-saas-comercecloud-core-backend
     spec:
       containers:
-        - name: app-core-backend-container
+        - name: app-saas-comercecloud-core-backend-container
           image: ghcr.io/blrvio/prj-saas-comercecloud-core-backend:development
           imagePullPolicy: Always
           env:
@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-core-backend-service
+  name: app-saas-comercecloud-core-backend-service
   namespace: ns-app-prj-saas-comercecloud-core-backend
 spec:
   selector:
@@ -52,12 +52,12 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-core-backend-ingress
+  name: app-saas-comercecloud-core-backend-ingress
   namespace: ns-app-prj-saas-comercecloud-core-backend
 spec:
   defaultBackend:
     service:
-      name: app-core-backend-service
+      name: app-saas-comercecloud-core-backend-service
       port:
         number: 80
   rules:
@@ -68,7 +68,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: app-core-backend-service
+            name: app-saas-comercecloud-core-backend-service
             port:
               number: 80
 
