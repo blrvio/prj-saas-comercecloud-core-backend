@@ -1,5 +1,5 @@
 {
-  "name": "template-core-backend",
+  "name": "prj-saas-comercecloud-core-backend",
   "version": "1.0.0",
   "description": "This project was bootstrapped with Fastify-CLI.",
   "main": "src/app.js",

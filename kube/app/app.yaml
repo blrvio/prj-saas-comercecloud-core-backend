@@ -1,27 +1,27 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ns-app-template-core-backend
+  name: ns-app-prj-saas-comercecloud-core-backend
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-core-backend-deployment
-  namespace: ns-app-template-core-backend
+  namespace: ns-app-prj-saas-comercecloud-core-backend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: app-template-core-backend
+      app: app-prj-saas-comercecloud-core-backend
   template:
     metadata:
       labels:
-        app: app-template-core-backend
+        app: app-prj-saas-comercecloud-core-backend
     spec:
       containers:
         - name: app-core-backend-container
-          image: ghcr.io/blrvio/template-core-backend-nodejs:development
+          image: ghcr.io/blrvio/prj-saas-comercecloud-core-backend:development
           imagePullPolicy: Always
           env:
             - name: APM_ENABLED
@@ -39,10 +39,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app-core-backend-service
-  namespace: ns-app-template-core-backend
+  namespace: ns-app-prj-saas-comercecloud-core-backend
 spec:
   selector:
-    app: app-template-core-backend
+    app: app-prj-saas-comercecloud-core-backend
   ports:
     - protocol: TCP
       port: 80
@@ -53,10 +53,22 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: app-core-backend-ingress
-  namespace: ns-app-template-core-backend
+  namespace: ns-app-prj-saas-comercecloud-core-backend
 spec:
   defaultBackend:
     service:
       name: app-core-backend-service
       port:
         number: 80
+  rules:
+  - host: api-dev.internal.blrv.io
+    http:
+      paths:
+      - path: /core
+        pathType: Prefix
+        backend:
+          service:
+            name: app-core-backend-service
+            port:
+              number: 80
+
