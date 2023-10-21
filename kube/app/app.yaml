@@ -54,13 +54,13 @@ metadata:
   name: app-saas-comercecloud-core-backend-ingress
   namespace: ns-app-prj-saas-comercecloud-core-backend
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: api-dev.internal.blrv.io
     http:
       paths:
-      - path: /core(/|$)(.*)
+      - path: /core
         pathType: Prefix
         backend:
           service:
