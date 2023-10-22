@@ -63,7 +63,6 @@ spec:
     http:
       paths:
       - path: /core/?(.*)
-        pathType: Prefix
         backend:
           service:
             name: app-saas-comercecloud-core-backend-service
