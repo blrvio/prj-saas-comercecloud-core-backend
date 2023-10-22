@@ -1,6 +1,7 @@
 const fp = require('fastify-plugin');
 const helmet = require('@fastify/helmet');
 const rateLimit = require('@fastify/rate-limit');
+import cors from '@fastify/cors'
 
 module.exports = fp(async fastify => {
   fastify.register(helmet); // Adds security headers
@@ -8,6 +9,10 @@ module.exports = fp(async fastify => {
     max: 100,
     timeWindow: '1 minute',
   });
+  await fastify.register(cors, { 
+    // put your options here
+    origin: ['http://localhost:3000'],
+  })
   //   fastify.register(require('@fastify/auth'));
   //   fastify.register(require('fastify-acl-auth'));
 });
