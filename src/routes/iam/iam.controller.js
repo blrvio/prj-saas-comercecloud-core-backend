@@ -21,7 +21,7 @@ async function addUserToOrganization(request, reply) {
     const { userId, permissions } = request.body;
     const { orgId } = request.params;
     console.log(request.user);
-    await connectDb();
+    //await connectDb();
     let organization = await Organization.findOne({ id: orgId });
 
     if (!organization) {
@@ -62,7 +62,7 @@ async function addUserToOrganization(request, reply) {
     console.log(error);
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -72,7 +72,7 @@ async function getUserPermissions(request, reply) {
     const { userUUID } = request.body;
     const { orgId } = request.params;
 
-    await connectDb();
+    //await connectDb();
     const organization = await Organization.findOne({ id: orgId });
 
     if (!organization) {
@@ -101,7 +101,7 @@ async function getUserPermissions(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -118,7 +118,7 @@ async function modifyUserPermissions(request, reply) {
     const { orgId } = request.params;
     const requestingUserId = request.user.appuid; // assumindo que o ID do usuário fazendo a solicitação é armazenado em request.user.id
 
-    await connectDb();
+    //await connectDb();
     let organization = await Organization.findOne({ id: orgId });
 
     if (!organization) {
@@ -158,7 +158,7 @@ async function modifyUserPermissions(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -174,7 +174,7 @@ async function removeUserFromOrganization(request, reply) {
     const { orgId, userId } = request.params;
     const requestingUserId = request.user.appuid; // assumindo que o ID do usuário fazendo a solicitação é armazenado em request.user.id
 
-    await connectDb();
+    //await connectDb();
     let organization = await Organization.findOne({ id: orgId });
 
     if (!organization) {
@@ -206,7 +206,7 @@ async function removeUserFromOrganization(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -215,7 +215,7 @@ async function listAllPermissions(request, reply) {
     const requesterUUID = request.user.appuid; // Assumindo que você tenha uma função para recuperar o UUID a partir do token.
     const { orgId, projectId } = request.query; // Agora pegando os query parameters
 
-    await connectDb();
+    //await connectDb();
 
     let entity;
     if (orgId) {
@@ -262,7 +262,7 @@ async function listAllPermissions(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 

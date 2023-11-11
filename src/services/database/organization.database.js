@@ -8,7 +8,7 @@ const { connectDb, disconnectDb } = require('./common.database');
  * @returns {Promise<Object>} - The created organization.
  */
 async function createOrganization(data) {
-  await connectDb();
+  //await connectDb();
   const organization = new Organization({ resource_data: data });
   disconnectDb();
   return await organization.save();
@@ -21,7 +21,7 @@ async function createOrganization(data) {
  * @returns {Promise<Object|null>} - The organization or null if not found.
  */
 async function getOrganizationById(id) {
-  await connectDb();
+  //await connectDb();
   return await Organization.findById(id)
     .exec()
     .finally(() => disconnectDb());
@@ -33,7 +33,7 @@ async function getOrganizationById(id) {
  * @returns {Promise<Object[]>} - The list of organizations.
  */
 async function listOrganizations() {
-  await connectDb();
+  //await connectDb();
   return await Organization.find()
     .exec()
     .finally(() => disconnectDb());
@@ -47,7 +47,7 @@ async function listOrganizations() {
  * @returns {Promise<Object|null>} - The updated organization or null if not found.
  */
 async function updateOrganization(id, data) {
-  await connectDb();
+  //await connectDb();
   return await Organization.findByIdAndUpdate(
     id,
     { resource_data: data },
@@ -64,7 +64,7 @@ async function updateOrganization(id, data) {
  * @returns {Promise<Object|null>} - The deleted organization or null if not found.
  */
 async function deleteOrganization(id) {
-  await connectDb();
+  //await connectDb();
   return await Organization.findByIdAndDelete(id)
     .exec()
     .finally(() => disconnectDb());

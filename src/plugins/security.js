@@ -11,7 +11,7 @@ module.exports = fp(async fastify => {
   });
   await fastify.register(cors, {
     // put your options here
-    origin: ['http://localhost:3000'],
+    origin: '*',
   });
   //   fastify.register(require('@fastify/auth'));
   //   fastify.register(require('fastify-acl-auth'));

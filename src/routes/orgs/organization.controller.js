@@ -31,14 +31,14 @@ async function createOrganization(request, reply) {
       thumbnail_url: request.body.thumbnail_url || 'undefined',
       kind: 'orgresources:organization',
     };
-    await connectDb();
+    //await connectDb();
     const newOrganization = new Organization(orgData);
     await newOrganization.save();
     reply.code(201).send(newOrganization);
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -53,7 +53,7 @@ async function readOrganization(request, reply) {
   try {
     const user_uuid = await checkUUIDFromToken(request.user);
     const orgId = request.params.id;
-    await connectDb();
+    //await connectDb();
     const organization = await Organization.findOne({
       id: orgId,
       $or: [
@@ -70,7 +70,7 @@ async function readOrganization(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -85,7 +85,7 @@ async function readOrganization(request, reply) {
 async function readAllOrganizations(request, reply) {
   try {
     const user_uuid = await checkUUIDFromToken(request.user);
-    await connectDb();
+    //await connectDb();
     const organizationList = await Organization.find({
       $or: [
         { 'resource_data.iam.read_users': user_uuid },
@@ -102,7 +102,7 @@ async function readAllOrganizations(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -118,7 +118,7 @@ async function updateOrganization(request, reply) {
     const user_uuid = await checkUUIDFromToken(request.user);
     const orgId = request.params.id;
     const updateData = request.body;
-    await connectDb();
+    //await connectDb();
     const organization = await Organization.findOneAndUpdate(
       {
         id: orgId,
@@ -138,7 +138,7 @@ async function updateOrganization(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -153,7 +153,7 @@ async function deleteOrganization(request, reply) {
   try {
     const user_uuid = await checkUUIDFromToken(request.user);
     const orgId = request.params.id;
-    await connectDb();
+    //await connectDb();
     const organization = await Organization.findOneAndDelete({
       id: orgId,
       'resource_data.iam.owner_user': user_uuid,
@@ -166,7 +166,7 @@ async function deleteOrganization(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 

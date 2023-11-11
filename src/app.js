@@ -9,6 +9,7 @@ if (
 const apm = require('./services/apm.service');
 const path = require('path');
 const AutoLoad = require('@fastify/autoload');
+const {connectDb} = require('./services/database/common.database');
 
 // Pass --options via CLI arguments in command to enable these options.
 module.exports.options = {};
@@ -32,6 +33,8 @@ module.exports = async function (fastify, opts) {
   } else {
     console.info('APM not started');
   }
+
+  await connectDb()
 
   // Do not touch the following lines
 

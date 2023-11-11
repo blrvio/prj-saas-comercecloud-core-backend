@@ -30,7 +30,7 @@ async function createUser(request, reply) {
       thumbnail_url: request.user.photoURL || 'undefined',
       kind: 'orgresources:user',
     };
-    await connectDb();
+    //await connectDb();
     const newUser = new User(userData);
     await newUser.save();
     request.admin.auth().setCustomUserClaims(request.user.uid, {
@@ -40,14 +40,14 @@ async function createUser(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 // Controller para ler dados sobre um usuário específico
 async function readUser(request, reply) {
   try {
     const userId = request.params.id;
-    await connectDb();
+    //await connectDb();
     // const user = await User.findById(userId).exec();
     const user = await User.findOne({ id: userId }).exec();
     if (user) {
@@ -58,7 +58,7 @@ async function readUser(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -92,7 +92,7 @@ async function updateUser(request, reply) {
     const userId = request.user.appuid; // Usuário atualmente autenticado
 
     const updateData = request.body;
-    await connectDb();
+    //await connectDb();
 
     const userData = await User.findOne({ id: userId }).exec();
 
@@ -113,7 +113,7 @@ async function updateUser(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error.message });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -122,7 +122,7 @@ async function deleteUser(request, reply) {
   try {
     const userId = request.user.appuid; // Usuário atualmente autenticado
 
-    await connectDb();
+    //await connectDb();
     const deletedUser = await User.findOneAndDelete({ id: userId }).exec();
     if (deletedUser) {
       reply.code(200).send({ message: 'User deleted successfully' });
@@ -132,7 +132,7 @@ async function deleteUser(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error.message });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 

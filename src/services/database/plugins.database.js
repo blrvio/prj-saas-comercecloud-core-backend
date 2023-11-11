@@ -16,7 +16,7 @@ async function checkUUIDFromToken(user) {
   if (user.appuid) {
     return user.appuid;
   } else {
-    await connectDb();
+    //await connectDb();
 
     // Busca o usuário no banco de dados usando user.uid
     const foundUser = await User.findOne({ idp_uuid: user.uid }).exec();

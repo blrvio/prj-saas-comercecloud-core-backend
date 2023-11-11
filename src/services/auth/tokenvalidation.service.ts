@@ -12,7 +12,7 @@ async function getUIDFromToken(user: User) {
   } else {
     try {
       // Conecta ao banco de dados
-      await connectDb();
+      //await connectDb();
 
       // Procura um usuário cujo idp_uuid corresponda ao uid do usuário
       const dbUser = await DbUser.findOne({ idp_uuid: user.uid });

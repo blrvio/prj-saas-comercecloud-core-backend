@@ -16,7 +16,7 @@ async function createProject(request, reply) {
 
     console.log(orgId, user_uuid);
     // Conectando ao banco
-    await connectDb();
+    //await connectDb();
 
     // Verificando se a organização existe e se o usuário tem as devidas permissões
     const organization = await Organization.findOne({ id: orgId });
@@ -60,7 +60,7 @@ async function createProject(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error.message });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -70,7 +70,7 @@ async function readProject(request, reply) {
     const projectId = request.params.id;
 
     // Conectando ao banco
-    await connectDb();
+    //await connectDb();
 
     // Buscando o projeto pelo ID
     const project = await Project.findOne({ id: projectId });
@@ -110,7 +110,7 @@ async function readProject(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error.message });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -118,7 +118,7 @@ async function readProject(request, reply) {
 async function readAllProjects(request, reply) {
   try {
     const user_uuid = await checkUUIDFromToken(request.user);
-    await connectDb();
+    //await connectDb();
     const projects = await Project.find({
       $or: [
         { 'resource_data.iam.read_users': user_uuid },
@@ -134,7 +134,7 @@ async function readAllProjects(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error.message });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -144,7 +144,7 @@ async function updateProject(request, reply) {
     const user_uuid = await checkUUIDFromToken(request.user);
     const projectId = request.params.id;
     const updateData = request.body;
-    await connectDb();
+    //await connectDb();
     const project = await Project.findOneAndUpdate(
       {
         id: projectId,
@@ -164,7 +164,7 @@ async function updateProject(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error.message });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
@@ -173,7 +173,7 @@ async function deleteProject(request, reply) {
   try {
     const user_uuid = await checkUUIDFromToken(request.user);
     const projectId = request.params.id;
-    await connectDb();
+    //await connectDb();
     const project = await Project.findOneAndDelete({
       id: projectId,
       'resource_data.iam.owner_user': user_uuid,
@@ -186,7 +186,7 @@ async function deleteProject(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error.message });
   } finally {
-    await disconnectDb();
+    //await disconnectDb();
   }
 }
 
