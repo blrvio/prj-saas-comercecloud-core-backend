@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const base_model = {
   name: { type: String, required: true },
   description: { type: String, required: true },
-  thumbnail_url: { type: String, required: true },
+  thumbnail_url: { type: String, required: false },
   kind: {
     type: String,
     required: true,

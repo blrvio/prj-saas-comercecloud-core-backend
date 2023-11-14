@@ -10,11 +10,11 @@ const {
 const { Organization } = require('../../../models/organization.model');
 
 async function createProject(request, reply) {
+  console.log('createProject', request.body);
   try {
     const user_uuid = await request.user.appuid;
     const { orgId } = request.params; // Pegando o ssorgId do path
 
-    console.log(orgId, user_uuid);
     // Conectando ao banco
     //await connectDb();
 
@@ -34,7 +34,9 @@ async function createProject(request, reply) {
 
     // Criando o projeto
     const projectData = {
-      ...request.body,
+      name: request.body.name,
+      description: request.body.description,
+      thumbnail_url: "https://images.unsplash.com/photo-1542626991-cbc4e32524cc",
       resource_data: {
         org_id: orgId,
         apis_enabled: [],
@@ -58,6 +60,7 @@ async function createProject(request, reply) {
     // Retornando o projeto criado
     reply.code(201).send(newProject);
   } catch (error) {
+    console.log(error);
     reply.code(500).send({ error: error.message });
   } finally {
     //await disconnectDb();
@@ -119,7 +122,9 @@ async function readAllProjects(request, reply) {
   try {
     const user_uuid = await checkUUIDFromToken(request.user);
     //await connectDb();
+    console.log(request.params);
     const projects = await Project.find({
+      'resource_data.org_id': request.params.orgId,
       $or: [
         { 'resource_data.iam.read_users': user_uuid },
         { 'resource_data.iam.write_users': user_uuid },
