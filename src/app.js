@@ -9,10 +9,22 @@ if (
 const apm = require('./services/apm.service');
 const path = require('path');
 const AutoLoad = require('@fastify/autoload');
-const {connectDb} = require('./services/database/common.database');
+const { connectDb } = require('./services/database/common.database');
+const Sentry = require('@sentry/node');
+const { ProfilingIntegration } = require('@sentry/profiling-node');
 
+Sentry.init({
+  dsn: 'https://d22573b279be1b092d5141d94635443a@o492475.ingest.sentry.io/4506235250081792',
+  integrations: [new ProfilingIntegration()],
+  // Performance Monitoring
+  tracesSampleRate: 1.0,
+  // Set sampling rate for profiling - this is relative to tracesSampleRate
+  profilesSampleRate: 1.0,
+});
 // Pass --options via CLI arguments in command to enable these options.
-module.exports.options = {};
+module.exports.options = {
+  logger: true,
+};
 
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
@@ -20,11 +32,13 @@ module.exports = async function (fastify, opts) {
   if (apm.isStarted()) {
     console.info('APM started');
     fastify.setErrorHandler(function (err, request, reply) {
+      Sentry.captureException(err);
       apm.captureError(err);
       reply.send(err);
     });
     fastify.setNotFoundHandler(function (request, reply) {
       const err = new Error('Route Not Found');
+      Sentry.captureException(err);
       apm.captureError(err);
       reply
         .code(404)
@@ -34,7 +48,7 @@ module.exports = async function (fastify, opts) {
     console.info('APM not started');
   }
 
-  await connectDb()
+  await connectDb();
 
   // Do not touch the following lines
 
