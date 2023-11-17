@@ -39,6 +39,7 @@ const organization_model = {
       write_users: [{ type: String, ref: 'User' }],
       owner_user: { type: String, ref: 'User' },
     },
+    business_category: { type: String },
     projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Projects' }],
   },
 };

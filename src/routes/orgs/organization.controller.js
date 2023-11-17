@@ -26,9 +26,10 @@ async function createOrganization(request, reply) {
           owner_user: user_uuid,
         },
       },
-      name: request.body.name || 'undefined',
-      description: request.body.description || 'undefined',
-      thumbnail_url: request.body.thumbnail_url || 'undefined',
+      name: request.body.name || '',
+      description: request.body.description || '',
+      thumbnail_url: request.body.thumbnail_url || '',
+      business_category: request.body.business_category || '',
       kind: 'orgresources:organization',
     };
     //await connectDb();
