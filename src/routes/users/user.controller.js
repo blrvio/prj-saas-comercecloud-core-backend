@@ -71,6 +71,10 @@ function filterUpdateData(updateData, inputData) {
     updateData.description = inputData.description;
   }
 
+  if (inputData.onboard_status) {
+    updateData.onboard_status = inputData.onboard_status;
+  }
+
   if (inputData.thumbnail_url) {
     updateData.thumbnail_url = inputData.thumbnail_url;
   }
@@ -83,28 +87,36 @@ function filterUpdateData(updateData, inputData) {
     }
   }
 
+  if (inputData.userAddress) {
+    updateData.resource_data.userAddress = inputData.userAddress;
+  }
+
   return updateData;
 }
 
-// Controller para modificar um usuário específico
 async function updateUser(request, reply) {
   try {
     const userId = request.user.appuid; // Usuário atualmente autenticado
-
     const updateData = request.body;
-    //await connectDb();
 
+    // Encontra o usuário no banco de dados
     const userData = await User.findOne({ id: userId }).exec();
 
+    if (!userData) {
+      reply.code(404).send({ error: 'User not found' });
+      return;
+    }
+
+    // Filtra e prepara os dados para atualização
     const updatedObject = filterUpdateData(userData, updateData);
 
+    // Atualiza o usuário no banco de dados
     const updatedUser = await User.findOneAndUpdate(
       { id: userId },
       updatedObject,
-      {
-        new: true,
-      },
+      { new: true }
     ).exec();
+
     if (updatedUser) {
       reply.code(200).send(updatedUser);
     } else {
@@ -113,7 +125,8 @@ async function updateUser(request, reply) {
   } catch (error) {
     reply.code(500).send({ error: error.message });
   } finally {
-    //await disconnectDb();
+    // Se você está usando uma conexão de banco de dados que precisa ser fechada, descomente a próxima linha
+    // await disconnectDb();
   }
 }
 

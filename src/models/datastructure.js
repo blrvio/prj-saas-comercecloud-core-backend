@@ -60,10 +60,25 @@ const user_model = {
     },
     email: { type: String, required: true, unique: true },
     phone: { type: String },
+    onboard_status:{type: String, enum: ['pending','first-organization', 'personal-information', 'personal-preferences', 'completed'], default: 'pending'},
     account_status: {
       type: String,
       required: true,
       enum: ['active', 'inactive', 'disabled'],
+    },
+    userAddress: {
+      postalCode: String,
+      streetName: String,
+      city: String,
+      state: String,
+      country: String,
+      formattedAddress: String,
+      location: {
+        lat: Number,
+        lng: Number
+      },
+      countryCode: String,
+      houseNumber: String,
     },
   },
 };
