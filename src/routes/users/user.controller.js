@@ -72,7 +72,7 @@ function filterUpdateData(updateData, inputData) {
   }
 
   if (inputData.onboard_status) {
-    updateData.onboard_status = inputData.onboard_status;
+    updateData.resource_data.onboard_status = inputData.onboard_status;
   }
 
   if (inputData.thumbnail_url) {
