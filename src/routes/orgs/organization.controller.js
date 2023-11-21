@@ -25,11 +25,11 @@ async function createOrganization(request, reply) {
         iam: {
           owner_user: user_uuid,
         },
+        business_category: request.body.business_category || '',
       },
       name: request.body.name || '',
       description: request.body.description || '',
       thumbnail_url: request.body.thumbnail_url || '',
-      business_category: request.body.business_category || '',
       kind: 'orgresources:organization',
     };
     //await connectDb();
