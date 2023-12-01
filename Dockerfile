@@ -1,5 +1,5 @@
 # Use a imagem oficial do Node.js Alpine como base
-FROM node:20-alpine
+FROM node
 
 # Defina o diretório de trabalho no container
 WORKDIR /usr/src/app
