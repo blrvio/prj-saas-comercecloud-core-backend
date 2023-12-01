@@ -28,8 +28,7 @@ const usersRoutes = async fastify => {
         properties: {
           id: { type: 'string', description: 'User ID' },
         },
-      },
-      response: userResponseSchema,
+      }
     },
     preHandler: fastify.checkAuth,
     handler: readUser,

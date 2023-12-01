@@ -63,36 +63,48 @@ async function readUser(request, reply) {
 }
 
 function filterUpdateData(updateData, inputData) {
-  if (inputData.name) {
-    updateData.name = inputData.name;
+  // Atualiza o nome de exibição
+  if (inputData.displayName) {
+    updateData.name = inputData.displayName;
   }
 
+  // Atualiza a descrição (se aplicável)
   if (inputData.description) {
     updateData.description = inputData.description;
   }
 
+    // Atualiza a descrição (se aplicável)
+    if (inputData.userPreferences) {
+      updateData.resource_data.user_preferences = inputData.userPreferences;
+    }
+
+  // Atualiza o status do onboard
   if (inputData.onboard_status) {
     updateData.resource_data.onboard_status = inputData.onboard_status;
   }
 
+  // Atualiza a URL da miniatura (se aplicável)
   if (inputData.thumbnail_url) {
     updateData.thumbnail_url = inputData.thumbnail_url;
   }
 
-  if (inputData.resource_data?.phone) {
-    updateData.resource_data.phone = inputData.resource_data.phone;
-
-    if (inputData.resource_data.phone) {
-      updateData.resource_data.phone = inputData.resource_data.phone;
-    }
+  // Atualiza o telefone e o CEP
+  if (inputData.phoneNumber) {
+    updateData.resource_data.phone = inputData.phoneNumber;
+  }
+  if (inputData.zipCode) {
+    updateData.resource_data.userAddress = updateData.resource_data.userAddress || {};
+    updateData.resource_data.userAddress.postalCode = inputData.zipCode;
   }
 
+  // Atualiza o endereço do usuário
   if (inputData.userAddress) {
-    updateData.resource_data.userAddress = inputData.userAddress;
+    updateData.resource_data.userAddress = { ...updateData.resource_data.userAddress, ...inputData.userAddress };
   }
 
   return updateData;
 }
+
 
 async function updateUser(request, reply) {
   try {

@@ -58,6 +58,7 @@ const user_model = {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Organization',
     },
+    user_preferences: [{type: String}],
     email: { type: String, required: true, unique: true },
     phone: { type: String },
     onboard_status:{type: String, enum: ['pending','first-organization', 'personal-information', 'personal-preferences', 'completed'], default: 'pending'},
